@@ -59,7 +59,7 @@ export default async function OverviewPage(props: { searchParams: Promise<Record
         />
       </section>
 
-      <section className="card p-6 mb-5">
+      <section className="card p-4 sm:p-6 mb-4 sm:mb-5">
         <div className="flex items-center justify-between flex-wrap gap-3 mb-4">
           <div>
             <p className="text-[15px] font-medium" style={{ color: "var(--navy)" }}>Évolution combinée</p>
@@ -73,21 +73,21 @@ export default async function OverviewPage(props: { searchParams: Promise<Record
             <span className="flex items-center gap-2"><span className="legend-dot" style={{ background: "#1B4965" }} />Livraisons</span>
           </div>
         </div>
-        <div className="h-[320px]"><CombinedChart data={daily} /></div>
+        <div className="h-[240px] sm:h-[320px]"><CombinedChart data={daily} /></div>
         <p className="text-[11px] mt-3" style={{ color: "var(--muted-2)" }}>
           Astuce : Ctrl + molette pour zoomer, Maj + glisser pour déplacer.
         </p>
       </section>
 
       <section className="grid grid-cols-1 lg:grid-cols-2 gap-5 mb-5">
-        <div className="card p-6">
+        <div className="card p-4 sm:p-6">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-[15px] font-medium" style={{ color: "var(--navy)" }}>Livraisons</p>
               <p className="text-xs mt-0.5" style={{ color: "var(--muted)" }}>Évolution sur la période</p>
             </div>
           </div>
-          <div className="h-[220px] mt-4">
+          <div className="h-[200px] sm:h-[220px] mt-4">
             <AreaChart
               labels={daily.map((d) => d.label)}
               values={daily.map((d) => d.livraisons)}
@@ -97,14 +97,14 @@ export default async function OverviewPage(props: { searchParams: Promise<Record
             />
           </div>
         </div>
-        <div className="card p-6">
+        <div className="card p-4 sm:p-6">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-[15px] font-medium" style={{ color: "var(--navy)" }}>Dépenses</p>
               <p className="text-xs mt-0.5" style={{ color: "var(--muted)" }}>Évolution sur la période</p>
             </div>
           </div>
-          <div className="h-[220px] mt-4">
+          <div className="h-[200px] sm:h-[220px] mt-4">
             <AreaChart
               labels={daily.map((d) => d.label)}
               values={daily.map((d) => d.depenses)}
@@ -116,7 +116,7 @@ export default async function OverviewPage(props: { searchParams: Promise<Record
       </section>
 
       <section className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-5">
-        <Link href="/depenses" className="shortcut card p-5">
+        <Link href="/depenses" className="shortcut card p-4 sm:p-5">
           <div className="flex items-start justify-between">
             <div>
               <p className="text-xs uppercase tracking-wider" style={{ color: "var(--muted)" }}>Approfondir</p>
@@ -126,7 +126,7 @@ export default async function OverviewPage(props: { searchParams: Promise<Record
             <span className="shortcut-arrow">→</span>
           </div>
         </Link>
-        <Link href="/livreurs" className="shortcut card p-5">
+        <Link href="/livreurs" className="shortcut card p-4 sm:p-5">
           <div className="flex items-start justify-between">
             <div>
               <p className="text-xs uppercase tracking-wider" style={{ color: "var(--muted)" }}>Comparer</p>
@@ -136,7 +136,7 @@ export default async function OverviewPage(props: { searchParams: Promise<Record
             <span className="shortcut-arrow">→</span>
           </div>
         </Link>
-        <Link href="/historique" className="shortcut card p-5">
+        <Link href="/historique" className="shortcut card p-4 sm:p-5">
           <div className="flex items-start justify-between">
             <div>
               <p className="text-xs uppercase tracking-wider" style={{ color: "var(--muted)" }}>Détail</p>

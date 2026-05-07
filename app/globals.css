@@ -137,20 +137,97 @@ html, body {
 
 section[id] { scroll-margin-top: 90px; }
 
-@media (max-width: 1024px) {
-  .sidebar { display: none; }
-  .main { padding-left: 20px !important; }
-  .mobile-nav { display: flex; }
-  .topbar-search { display: none !important; }
-  .kpi-grid { grid-template-columns: 1fr !important; }
-  .split { grid-template-columns: 1fr !important; }
-  .fab { display: flex !important; }
-  .header-title { font-size: 22px !important; }
+/* Mobile header — JBABI logo visible only on small screens */
+.mobile-header { display: none; }
+
+/* Horizontally scrollable segmented controls (period presets, etc.) */
+.seg-scroll { overflow-x: auto; scrollbar-width: none; -ms-overflow-style: none; max-width: 100%; }
+.seg-scroll::-webkit-scrollbar { display: none; }
+.seg-scroll .seg { flex-wrap: nowrap; }
+
+/* Visual hint that a table can be scrolled horizontally */
+.scroll-hint { position: relative; }
+.scroll-hint::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 24px;
+  background: linear-gradient(to right, transparent, rgba(253, 248, 240, 0.95));
+  pointer-events: none;
 }
 
-.mobile-nav { display: none; position: fixed; bottom: 14px; left: 14px; right: 14px; background: #fff; border: 1px solid var(--border); border-radius: 18px; padding: 8px; justify-content: space-between; z-index: 30; }
-.mobile-nav a { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 6px 0; color: var(--muted); font-size: 11px; font-weight: 500; border-radius: 12px; }
+@media (max-width: 1024px) {
+  .sidebar { display: none; }
+  .main {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+    padding-top: 12px !important;
+    padding-bottom: 96px !important; /* room for the bottom mobile nav */
+  }
+  .mobile-nav { display: flex; }
+  .mobile-header { display: flex; }
+  .topbar-search { display: none !important; }
+  .kpi-grid { grid-template-columns: 1fr !important; gap: 12px !important; }
+  .split { grid-template-columns: 1fr !important; }
+  .fab { display: flex !important; }
+  .header-title { font-size: 20px !important; }
+
+  /* Compact cards */
+  .card { border-radius: 16px; }
+  .stat-num { font-size: 26px !important; }
+  .stat-label { font-size: 12px !important; }
+
+  /* Charts breathe more on small screens */
+  .chart-h-lg { height: 240px !important; }
+  .chart-h-md { height: 200px !important; }
+  .chart-h-sm { height: 180px !important; }
+
+  /* Page header collapses on mobile, time strip hides */
+  .live-time-strip { display: none !important; }
+
+  /* Calendar popup — 1 month, max-width to viewport */
+  .rdp-multiple_months { display: block !important; }
+  .rdp-multiple_months .rdp-month:not(:first-child) { display: none !important; }
+  .calendar-popup { left: 0 !important; right: 0 !important; max-width: calc(100vw - 32px); }
+}
+
+.mobile-nav {
+  display: none;
+  position: fixed;
+  bottom: 12px;
+  left: 12px;
+  right: 12px;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 6px;
+  justify-content: space-between;
+  z-index: 30;
+  box-shadow: 0 4px 12px rgba(0,0,0,.06);
+}
+.mobile-nav a {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 8px 0;
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 500;
+  border-radius: 10px;
+}
 .mobile-nav a.active { background: var(--orange-soft); color: var(--navy); }
+
+.mobile-header {
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 4px 4px 12px;
+}
+.mobile-header img { height: 36px; width: auto; }
 
 .fab { display: none; position: fixed; right: 18px; bottom: 80px; width: 56px; height: 56px; border-radius: 999px; background: var(--orange); color: #fff; align-items: center; justify-content: center; z-index: 31; }
 

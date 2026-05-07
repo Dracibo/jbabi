@@ -33,33 +33,33 @@ export default async function ExpensesPage(props: { searchParams: Promise<Record
       {dataError ? <DataError message={dataError} /> : null}
 
       <section className="grid grid-cols-2 lg:grid-cols-4 gap-5 mb-5">
-        <div className="card p-5">
+        <div className="card p-4 sm:p-5">
           <p className="text-xs uppercase tracking-wider" style={{ color: "var(--muted)" }}>Total dépenses</p>
           <p className="num text-[22px] font-medium mt-2" style={{ color: "var(--navy)" }}>{formatFcfa(exp.total)}</p>
           <p className="text-xs mt-1" style={{ color: pctChange(kpi.depenses, kpi.depensesPrev) <= 0 ? "#0E8C68" : "#C92626" }}>
             {pctChange(kpi.depenses, kpi.depensesPrev) <= 0 ? "↓" : "↑"} {formatPercent(pctChange(kpi.depenses, kpi.depensesPrev))} vs précédent
           </p>
         </div>
-        <div className="card p-5">
+        <div className="card p-4 sm:p-5">
           <p className="text-xs uppercase tracking-wider" style={{ color: "var(--muted)" }}>Part carburant</p>
           <p className="num text-[22px] font-medium mt-2" style={{ color: "var(--navy)" }}>{pctCarb.toFixed(0)}%</p>
           <p className="text-xs mt-1" style={{ color: "var(--muted)" }}>{formatFcfa(exp.carburant)}</p>
         </div>
-        <div className="card p-5">
+        <div className="card p-4 sm:p-5">
           <p className="text-xs uppercase tracking-wider" style={{ color: "var(--muted)" }}>Coût / livraison</p>
           <p className="num text-[22px] font-medium mt-2" style={{ color: "var(--navy)" }}>{formatFcfa(kpi.coutParLivraison)}</p>
           <p className="text-xs mt-1" style={{ color: pctChange(kpi.coutParLivraison, kpi.coutParLivraisonPrev) <= 0 ? "#0E8C68" : "#C92626" }}>
             {pctChange(kpi.coutParLivraison, kpi.coutParLivraisonPrev) <= 0 ? "↓" : "↑"} {formatPercent(pctChange(kpi.coutParLivraison, kpi.coutParLivraisonPrev))}
           </p>
         </div>
-        <div className="card p-5">
+        <div className="card p-4 sm:p-5">
           <p className="text-xs uppercase tracking-wider" style={{ color: "var(--muted)" }}>Ratio dépenses</p>
           <p className="num text-[22px] font-medium mt-2" style={{ color: "var(--navy)" }}>{ratio.toFixed(0)}%</p>
           <p className="text-xs mt-1" style={{ color: "var(--muted)" }}>du chiffre absorbé</p>
         </div>
       </section>
 
-      <section className="card p-6 mb-5">
+      <section className="card p-4 sm:p-6 mb-4 sm:mb-5">
         <div className="flex items-center justify-between mb-2 flex-wrap gap-3">
           <div>
             <p className="text-[15px] font-medium" style={{ color: "var(--navy)" }}>Évolution des dépenses</p>
@@ -71,11 +71,11 @@ export default async function ExpensesPage(props: { searchParams: Promise<Record
             <span className="flex items-center gap-2"><span className="legend-dot" style={{ background: "#F59E0B" }} />Autres</span>
           </div>
         </div>
-        <div className="h-[320px] mt-4"><StackedExpensesChart data={daily} /></div>
+        <div className="h-[240px] sm:h-[320px] mt-4"><StackedExpensesChart data={daily} /></div>
       </section>
 
       <section className="grid grid-cols-1 lg:grid-cols-[2fr_3fr] gap-5">
-        <div className="card p-6">
+        <div className="card p-4 sm:p-6">
           <p className="text-[15px] font-medium" style={{ color: "var(--navy)" }}>Répartition</p>
           <p className="text-xs mt-0.5" style={{ color: "var(--muted)" }}>Sur la période</p>
           <div className="relative mt-6 mx-auto" style={{ maxWidth: 240, aspectRatio: "1/1" }}>
@@ -96,10 +96,10 @@ export default async function ExpensesPage(props: { searchParams: Promise<Record
           </ul>
         </div>
 
-        <div className="card p-6">
+        <div className="card p-4 sm:p-6">
           <p className="text-[15px] font-medium" style={{ color: "var(--navy)" }}>Recettes vs Dépenses</p>
           <p className="text-xs mt-0.5" style={{ color: "var(--muted)" }}>Marge nette sur la période</p>
-          <div className="h-[260px] mt-4">
+          <div className="h-[220px] sm:h-[260px] mt-4">
             <AreaChart
               labels={daily.map((d) => d.label)}
               values={daily.map((d) => d.recettes - d.depenses)}

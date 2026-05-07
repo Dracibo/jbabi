@@ -41,7 +41,7 @@ export default async function DeliveriesPage(props: { searchParams: Promise<Reco
       <div className="mb-6"><PeriodSelector /></div>
       {dataError ? <DataError message={dataError} /> : null}
 
-      <section className="card p-6 mb-5">
+      <section className="card p-4 sm:p-6 mb-4 sm:mb-5">
         <div className="flex items-center justify-between flex-wrap gap-3 mb-4">
           <div>
             <p className="text-[15px] font-medium" style={{ color: "var(--navy)" }}>Évolution des livraisons</p>
@@ -49,7 +49,7 @@ export default async function DeliveriesPage(props: { searchParams: Promise<Reco
           </div>
           <span className="badge b-blue">Moy. {moyJour.toFixed(1)} / {parsed.gran === "day" ? "jour" : parsed.gran === "week" ? "sem." : "mois"}</span>
         </div>
-        <div className="h-[320px]">
+        <div className="h-[240px] sm:h-[320px]">
           <AreaChart
             labels={daily.map((d) => d.label)}
             values={daily.map((d) => d.livraisons)}
@@ -62,21 +62,21 @@ export default async function DeliveriesPage(props: { searchParams: Promise<Reco
       </section>
 
       <section className="grid grid-cols-1 md:grid-cols-4 gap-5 mb-5">
-        <div className="card p-5">
+        <div className="card p-4 sm:p-5">
           <p className="text-[11px] uppercase tracking-wider" style={{ color: "var(--muted)" }}>Total période</p>
           <p className="num text-[24px] font-medium mt-2" style={{ color: "var(--navy)" }}>{formatNumber(kpi.livraisons)}</p>
           <p className="text-xs mt-1" style={{ color: "var(--muted)" }}>livraisons</p>
         </div>
-        <div className="card p-5">
+        <div className="card p-4 sm:p-5">
           <p className="text-[11px] uppercase tracking-wider" style={{ color: "var(--muted)" }}>Moyenne / {parsed.gran === "day" ? "jour" : parsed.gran === "week" ? "semaine" : "mois"}</p>
           <p className="num text-[24px] font-medium mt-2" style={{ color: "var(--navy)" }}>{moyJour.toFixed(1)}</p>
         </div>
-        <div className="card p-5">
+        <div className="card p-4 sm:p-5">
           <p className="text-[11px] uppercase tracking-wider" style={{ color: "var(--muted)" }}>Meilleur</p>
           <p className="num text-[24px] font-medium mt-2" style={{ color: "var(--navy)" }}>{meilleurJour}</p>
           <p className="text-xs mt-1" style={{ color: "var(--muted)" }}>record sur la période</p>
         </div>
-        <div className="card p-5">
+        <div className="card p-4 sm:p-5">
           <p className="text-[11px] uppercase tracking-wider" style={{ color: "var(--muted)" }}>Évolution</p>
           <p className="num text-[24px] font-medium mt-2" style={{ color: pctChange(kpi.livraisons, kpi.livraisonsPrev) >= 0 ? "#10B981" : "#EF4444" }}>
             {formatPercent(pctChange(kpi.livraisons, kpi.livraisonsPrev))}
@@ -86,10 +86,10 @@ export default async function DeliveriesPage(props: { searchParams: Promise<Reco
       </section>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
-        <div className="card p-6">
+        <div className="card p-4 sm:p-6">
           <p className="text-[15px] font-medium" style={{ color: "var(--navy)" }}>Livraisons par jour de semaine</p>
           <p className="text-xs mt-0.5" style={{ color: "var(--muted)" }}>Moyenne sur la période</p>
-          <div className="h-[240px] mt-4">
+          <div className="h-[200px] sm:h-[240px] mt-4">
             <BarChart labels={WEEKDAY_LABELS} values={weekdayAvg.map((v) => +v.toFixed(1))} colors="#F5A742" unit="livraisons" />
           </div>
         </div>

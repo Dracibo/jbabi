@@ -27,14 +27,14 @@ export default async function CouriersPage(props: { searchParams: Promise<Record
       <div className="mb-6"><PeriodSelector /></div>
       {dataError ? <DataError message={dataError} /> : null}
 
-      <section className="card p-6 mb-5">
+      <section className="card p-4 sm:p-6 mb-4 sm:mb-5">
         <div className="flex items-center justify-between mb-2">
           <div>
             <p className="text-[15px] font-medium" style={{ color: "var(--navy)" }}>Classement des livreurs</p>
             <p className="text-xs mt-0.5" style={{ color: "var(--muted)" }}>Par nombre de livraisons</p>
           </div>
         </div>
-        <div className="h-[260px] mt-4">
+        <div className="h-[220px] sm:h-[260px] mt-4">
           {stats.length > 0 ? (
             <BarChart
               labels={stats.map((s) => s.name)}
@@ -52,7 +52,7 @@ export default async function CouriersPage(props: { searchParams: Promise<Record
       </section>
 
       <section className="card p-0 overflow-hidden">
-        <div className="scroll-x">
+        <div className="scroll-x scroll-hint">
           <table className="w-full">
             <thead>
               <tr>

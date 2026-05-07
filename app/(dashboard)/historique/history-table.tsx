@@ -4,7 +4,7 @@ import { useMemo, useState } from "react";
 import { format } from "date-fns";
 import { fr } from "date-fns/locale";
 import { Search } from "lucide-react";
-import { formatFcfa, formatNumber, initials } from "@/lib/utils";
+import { cn, formatFcfa, formatNumber, initials } from "@/lib/utils";
 
 type Row = {
   date: string;
@@ -43,11 +43,13 @@ export function HistoryTable({ rows }: { rows: Row[] }) {
 
   return (
     <section className="card p-0 overflow-hidden">
-      <div className="flex items-center gap-3 p-4 border-b hairline-soft flex-wrap">
-        <div className="seg" role="radiogroup" aria-label="Filtre recette">
-          <button type="button" className={filter === "all" ? "on" : ""} onClick={() => setFilter("all")}>Toutes</button>
-          <button type="button" className={filter === "positive" ? "on" : ""} onClick={() => setFilter("positive")}>Recette positive</button>
-          <button type="button" className={filter === "negative" ? "on" : ""} onClick={() => setFilter("negative")}>Recette négative</button>
+      <div className="flex flex-col sm:flex-row sm:items-center gap-3 p-3 sm:p-4 border-b hairline-soft">
+        <div className="seg-scroll">
+          <div className="seg" role="radiogroup" aria-label="Filtre recette">
+            <button type="button" className={cn(filter === "all" && "on", "whitespace-nowrap")} onClick={() => setFilter("all")}>Toutes</button>
+            <button type="button" className={cn(filter === "positive" && "on", "whitespace-nowrap")} onClick={() => setFilter("positive")}>Positive</button>
+            <button type="button" className={cn(filter === "negative" && "on", "whitespace-nowrap")} onClick={() => setFilter("negative")}>Négative</button>
+          </div>
         </div>
         <label className="search-bar w-full sm:w-[280px] sm:ml-auto" style={{ height: 38 }}>
           <Search size={16} strokeWidth={1.6} color="#9AA0AA" />
@@ -58,13 +60,13 @@ export function HistoryTable({ rows }: { rows: Row[] }) {
             aria-label="Rechercher"
           />
         </label>
-        <span className="text-xs" style={{ color: "var(--muted)" }}>
+        <span className="text-xs sm:ml-2" style={{ color: "var(--muted)" }}>
           <span className="num">{visible.length}</span> entrée{visible.length > 1 ? "s" : ""}
         </span>
       </div>
 
-      <div className="scroll-x">
-        <table className="w-full">
+      <div className="scroll-x scroll-hint">
+        <table className="w-full" style={{ minWidth: 720 }}>
           <thead>
             <tr>
               <th className="table-th">Date</th>
