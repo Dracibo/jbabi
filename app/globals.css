@@ -137,61 +137,14 @@ html, body {
 
 section[id] { scroll-margin-top: 90px; }
 
-/* Mobile header — JBABI logo visible only on small screens */
-.mobile-header { display: none; }
+/* Prevent any horizontal page scroll on small screens */
+html, body { overflow-x: clip; }
 
-/* Horizontally scrollable segmented controls (period presets, etc.) */
-.seg-scroll { overflow-x: auto; scrollbar-width: none; -ms-overflow-style: none; max-width: 100%; }
-.seg-scroll::-webkit-scrollbar { display: none; }
-.seg-scroll .seg { flex-wrap: nowrap; }
-
-/* Visual hint that a table can be scrolled horizontally */
-.scroll-hint { position: relative; }
-.scroll-hint::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  width: 24px;
-  background: linear-gradient(to right, transparent, rgba(253, 248, 240, 0.95));
-  pointer-events: none;
-}
-
-@media (max-width: 1024px) {
-  .sidebar { display: none; }
-  .main {
-    padding-left: 16px !important;
-    padding-right: 16px !important;
-    padding-top: 12px !important;
-    padding-bottom: 96px !important; /* room for the bottom mobile nav */
-  }
-  .mobile-nav { display: flex; }
-  .mobile-header { display: flex; }
-  .topbar-search { display: none !important; }
-  .kpi-grid { grid-template-columns: 1fr !important; gap: 12px !important; }
-  .split { grid-template-columns: 1fr !important; }
-  .fab { display: flex !important; }
-  .header-title { font-size: 20px !important; }
-
-  /* Compact cards */
-  .card { border-radius: 16px; }
-  .stat-num { font-size: 26px !important; }
-  .stat-label { font-size: 12px !important; }
-
-  /* Charts breathe more on small screens */
-  .chart-h-lg { height: 240px !important; }
-  .chart-h-md { height: 200px !important; }
-  .chart-h-sm { height: 180px !important; }
-
-  /* Page header collapses on mobile, time strip hides */
-  .live-time-strip { display: none !important; }
-
-  /* Calendar popup — 1 month, max-width to viewport */
-  .rdp-multiple_months { display: block !important; }
-  .rdp-multiple_months .rdp-month:not(:first-child) { display: none !important; }
-  .calendar-popup { left: 0 !important; right: 0 !important; max-width: calc(100vw - 32px); }
-}
+/* ===========================================================
+ * Mobile-only UI primitives
+ * Defined here ONCE with display:none baseline.
+ * Media query below flips them to visible on small viewports.
+ * =========================================================== */
 
 .mobile-nav {
   display: none;
@@ -222,6 +175,7 @@ section[id] { scroll-margin-top: 90px; }
 .mobile-nav a.active { background: var(--orange-soft); color: var(--navy); }
 
 .mobile-header {
+  display: none;
   align-items: center;
   justify-content: space-between;
   gap: 12px;
@@ -229,7 +183,89 @@ section[id] { scroll-margin-top: 90px; }
 }
 .mobile-header img { height: 36px; width: auto; }
 
-.fab { display: none; position: fixed; right: 18px; bottom: 80px; width: 56px; height: 56px; border-radius: 999px; background: var(--orange); color: #fff; align-items: center; justify-content: center; z-index: 31; }
+.fab {
+  display: none;
+  position: fixed;
+  right: 18px;
+  bottom: 80px;
+  width: 56px;
+  height: 56px;
+  border-radius: 999px;
+  background: var(--orange);
+  color: #fff;
+  align-items: center;
+  justify-content: center;
+  z-index: 31;
+}
+
+/* Horizontally scrollable segmented controls (period presets, etc.) */
+.seg-scroll {
+  width: 100%;
+  min-width: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  -webkit-overflow-scrolling: touch;
+}
+.seg-scroll::-webkit-scrollbar { display: none; }
+.seg-scroll .seg { flex-wrap: nowrap; }
+
+/* Horizontally scrollable wrapper for data-heavy charts on mobile */
+.chart-scroll-x {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+}
+.chart-scroll-x::-webkit-scrollbar { height: 4px; }
+.chart-scroll-x::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+/* Visual hint that a container can be scrolled horizontally */
+.scroll-hint { position: relative; }
+.scroll-hint::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 24px;
+  background: linear-gradient(to right, transparent, rgba(253, 248, 240, 0.95));
+  pointer-events: none;
+}
+
+/* ===========================================================
+ * Mobile breakpoint (≤1024px)
+ * =========================================================== */
+@media (max-width: 1024px) {
+  .sidebar { display: none; }
+  .main {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+    padding-top: 12px !important;
+    padding-bottom: 96px !important;
+  }
+  .mobile-nav { display: flex; }
+  .mobile-header { display: flex; }
+  .topbar-search { display: none !important; }
+  .kpi-grid { grid-template-columns: 1fr !important; gap: 12px !important; }
+  .split { grid-template-columns: 1fr !important; }
+  .fab { display: flex !important; }
+  .header-title { font-size: 20px !important; }
+
+  .card { border-radius: 16px; }
+  .stat-num { font-size: 26px !important; }
+  .stat-label { font-size: 12px !important; }
+
+  .live-time-strip { display: none !important; }
+
+  /* react-day-picker: 1 month, popup constrained to viewport */
+  .rdp-multiple_months { display: block !important; }
+  .rdp-multiple_months .rdp-month:not(:first-child) { display: none !important; }
+  .calendar-popup { left: 0 !important; right: 0 !important; max-width: calc(100vw - 32px); }
+
+  /* Force data-heavy charts to a min width so points have room.
+     The .chart-scroll-x parent provides the horizontal scroll. */
+  .chart-scroll-x > * { min-width: 640px; }
+}
 
 a, button { transition: opacity .15s ease, background-color .15s ease, color .15s ease, border-color .15s ease; }
 a:hover { opacity: .85; }

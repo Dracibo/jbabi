@@ -73,7 +73,9 @@ export default async function OverviewPage(props: { searchParams: Promise<Record
             <span className="flex items-center gap-2"><span className="legend-dot" style={{ background: "#1B4965" }} />Livraisons</span>
           </div>
         </div>
-        <div className="h-[240px] sm:h-[320px]"><CombinedChart data={daily} /></div>
+        <div className="chart-scroll-x">
+          <div className="h-[240px] sm:h-[320px]"><CombinedChart data={daily} /></div>
+        </div>
         <p className="text-[11px] mt-3" style={{ color: "var(--muted-2)" }}>
           Astuce : Ctrl + molette pour zoomer, Maj + glisser pour déplacer.
         </p>
@@ -87,14 +89,16 @@ export default async function OverviewPage(props: { searchParams: Promise<Record
               <p className="text-xs mt-0.5" style={{ color: "var(--muted)" }}>Évolution sur la période</p>
             </div>
           </div>
-          <div className="h-[200px] sm:h-[220px] mt-4">
-            <AreaChart
-              labels={daily.map((d) => d.label)}
-              values={daily.map((d) => d.livraisons)}
-              color="#1B4965"
-              format="number"
-              unitSuffix=" livraisons"
-            />
+          <div className="chart-scroll-x mt-4">
+            <div className="h-[200px] sm:h-[220px]">
+              <AreaChart
+                labels={daily.map((d) => d.label)}
+                values={daily.map((d) => d.livraisons)}
+                color="#1B4965"
+                format="number"
+                unitSuffix=" livraisons"
+              />
+            </div>
           </div>
         </div>
         <div className="card p-4 sm:p-6">
@@ -104,13 +108,15 @@ export default async function OverviewPage(props: { searchParams: Promise<Record
               <p className="text-xs mt-0.5" style={{ color: "var(--muted)" }}>Évolution sur la période</p>
             </div>
           </div>
-          <div className="h-[200px] sm:h-[220px] mt-4">
-            <AreaChart
-              labels={daily.map((d) => d.label)}
-              values={daily.map((d) => d.depenses)}
-              color="#F5A742"
-              format="fcfa"
-            />
+          <div className="chart-scroll-x mt-4">
+            <div className="h-[200px] sm:h-[220px]">
+              <AreaChart
+                labels={daily.map((d) => d.label)}
+                values={daily.map((d) => d.depenses)}
+                color="#F5A742"
+                format="fcfa"
+              />
+            </div>
           </div>
         </div>
       </section>

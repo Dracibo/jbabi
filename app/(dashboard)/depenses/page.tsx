@@ -71,7 +71,9 @@ export default async function ExpensesPage(props: { searchParams: Promise<Record
             <span className="flex items-center gap-2"><span className="legend-dot" style={{ background: "#F59E0B" }} />Autres</span>
           </div>
         </div>
-        <div className="h-[240px] sm:h-[320px] mt-4"><StackedExpensesChart data={daily} /></div>
+        <div className="chart-scroll-x mt-4">
+          <div className="h-[240px] sm:h-[320px]"><StackedExpensesChart data={daily} /></div>
+        </div>
       </section>
 
       <section className="grid grid-cols-1 lg:grid-cols-[2fr_3fr] gap-5">
@@ -99,13 +101,15 @@ export default async function ExpensesPage(props: { searchParams: Promise<Record
         <div className="card p-4 sm:p-6">
           <p className="text-[15px] font-medium" style={{ color: "var(--navy)" }}>Recettes vs Dépenses</p>
           <p className="text-xs mt-0.5" style={{ color: "var(--muted)" }}>Marge nette sur la période</p>
-          <div className="h-[220px] sm:h-[260px] mt-4">
-            <AreaChart
-              labels={daily.map((d) => d.label)}
-              values={daily.map((d) => d.recettes - d.depenses)}
-              color="#10B981"
-              format="fcfa"
-            />
+          <div className="chart-scroll-x mt-4">
+            <div className="h-[220px] sm:h-[260px]">
+              <AreaChart
+                labels={daily.map((d) => d.label)}
+                values={daily.map((d) => d.recettes - d.depenses)}
+                color="#10B981"
+                format="fcfa"
+              />
+            </div>
           </div>
         </div>
       </section>

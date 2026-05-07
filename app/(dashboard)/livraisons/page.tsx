@@ -49,14 +49,16 @@ export default async function DeliveriesPage(props: { searchParams: Promise<Reco
           </div>
           <span className="badge b-blue">Moy. {moyJour.toFixed(1)} / {parsed.gran === "day" ? "jour" : parsed.gran === "week" ? "sem." : "mois"}</span>
         </div>
-        <div className="h-[240px] sm:h-[320px]">
-          <AreaChart
-            labels={daily.map((d) => d.label)}
-            values={daily.map((d) => d.livraisons)}
-            color="#1B4965"
-            format="number"
-            unitSuffix=" livraisons"
-          />
+        <div className="chart-scroll-x">
+          <div className="h-[240px] sm:h-[320px]">
+            <AreaChart
+              labels={daily.map((d) => d.label)}
+              values={daily.map((d) => d.livraisons)}
+              color="#1B4965"
+              format="number"
+              unitSuffix=" livraisons"
+            />
+          </div>
         </div>
         <p className="text-[11px] mt-3" style={{ color: "var(--muted-2)" }}>Ctrl + molette pour zoomer · Maj + glisser pour déplacer</p>
       </section>
