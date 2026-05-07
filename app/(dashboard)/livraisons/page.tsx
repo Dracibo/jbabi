@@ -2,7 +2,8 @@ import { PageHeader } from "@/components/dashboard/page-header";
 import { PeriodSelector } from "@/components/dashboard/period-selector";
 import { AreaChart } from "@/components/charts/area-chart";
 import { BarChart } from "@/components/charts/bar-chart";
-import { getDeliveryRows } from "@/lib/sheets/fetch";
+import { getDeliveryRowsSafe } from "@/lib/sheets/fetch";
+import { DataError } from "@/components/dashboard/data-error";
 import { computeDaily, computeKpi, filterByPeriod, pctChange } from "@/lib/aggregate";
 import { periodCache, resolvePeriod, periodToLabel } from "@/lib/period-search-params";
 import { formatNumber, formatPercent } from "@/lib/utils";
@@ -16,7 +17,7 @@ export default async function DeliveriesPage(props: { searchParams: Promise<Reco
   const parsed = periodCache.parse(searchParams);
   const period = resolvePeriod(parsed);
 
-  const rows = await getDeliveryRows().catch(() => []);
+  const { rows, error: dataError } = await getDeliveryRowsSafe();
   const filtered = filterByPeriod(rows, period);
   const kpi = computeKpi(rows, period, rows);
   const daily = computeDaily(rows, period, parsed.gran);
@@ -38,6 +39,7 @@ export default async function DeliveriesPage(props: { searchParams: Promise<Reco
     <>
       <PageHeader title="Livraisons" subtitle={`Évolution ${parsed.gran === "day" ? "quotidienne" : parsed.gran === "week" ? "hebdomadaire" : "mensuelle"} · ${periodToLabel(period, parsed.preset)}`} />
       <div className="mb-6"><PeriodSelector /></div>
+      {dataError ? <DataError message={dataError} /> : null}
 
       <section className="card p-6 mb-5">
         <div className="flex items-center justify-between flex-wrap gap-3 mb-4">

@@ -4,12 +4,12 @@ import { PeriodSelector } from "@/components/dashboard/period-selector";
 import { KpiCard } from "@/components/dashboard/kpi-card";
 import { CombinedChart } from "@/components/charts/combined-chart";
 import { AreaChart } from "@/components/charts/area-chart";
-import { getDeliveryRows } from "@/lib/sheets/fetch";
+import { DataError } from "@/components/dashboard/data-error";
+import { getDeliveryRowsSafe } from "@/lib/sheets/fetch";
 import { computeKpi, computeDaily, pctChange } from "@/lib/aggregate";
 import { periodCache, resolvePeriod, periodToLabel } from "@/lib/period-search-params";
 import { formatFcfa, formatNumber } from "@/lib/utils";
 import { Bike, Wallet, Calculator } from "lucide-react";
-import type { DeliveryRow } from "@/lib/types";
 
 export const dynamic = "force-dynamic";
 
@@ -18,13 +18,7 @@ export default async function OverviewPage(props: { searchParams: Promise<Record
   const parsed = periodCache.parse(searchParams);
   const period = resolvePeriod(parsed);
 
-  let rows: DeliveryRow[] = [];
-  let dataError: string | null = null;
-  try {
-    rows = await getDeliveryRows();
-  } catch (err) {
-    dataError = err instanceof Error ? err.message : "Erreur de chargement des données";
-  }
+  const { rows, error: dataError } = await getDeliveryRowsSafe();
 
   const kpi = computeKpi(rows, period, rows);
   const daily = computeDaily(rows, period, parsed.gran);
@@ -37,15 +31,7 @@ export default async function OverviewPage(props: { searchParams: Promise<Record
         <PeriodSelector />
       </div>
 
-      {dataError ? (
-        <div className="card p-5 mb-6" style={{ background: "var(--red-soft)", borderColor: "#F8C9C9" }}>
-          <p className="text-sm font-medium" style={{ color: "#C92626" }}>Données indisponibles</p>
-          <p className="text-xs mt-1" style={{ color: "#C92626" }}>{dataError}</p>
-          <p className="text-xs mt-2" style={{ color: "var(--muted)" }}>
-            Vérifie les variables d&apos;environnement <code>GOOGLE_SHEET_ID</code>, <code>GOOGLE_SERVICE_ACCOUNT_EMAIL</code> et <code>GOOGLE_PRIVATE_KEY</code>.
-          </p>
-        </div>
-      ) : null}
+      {dataError ? <DataError message={dataError} /> : null}
 
       <section className="kpi-grid grid grid-cols-1 md:grid-cols-3 gap-5 mb-6">
         <KpiCard

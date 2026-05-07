@@ -3,7 +3,8 @@ import { PeriodSelector } from "@/components/dashboard/period-selector";
 import { StackedExpensesChart } from "@/components/charts/stacked-expenses";
 import { DonutChart } from "@/components/charts/donut";
 import { AreaChart } from "@/components/charts/area-chart";
-import { getDeliveryRows } from "@/lib/sheets/fetch";
+import { getDeliveryRowsSafe } from "@/lib/sheets/fetch";
+import { DataError } from "@/components/dashboard/data-error";
 import { computeDaily, computeExpenses, computeKpi, pctChange } from "@/lib/aggregate";
 import { periodCache, resolvePeriod, periodToLabel } from "@/lib/period-search-params";
 import { formatFcfa, formatPercent } from "@/lib/utils";
@@ -15,7 +16,7 @@ export default async function ExpensesPage(props: { searchParams: Promise<Record
   const parsed = periodCache.parse(searchParams);
   const period = resolvePeriod(parsed);
 
-  const rows = await getDeliveryRows().catch(() => []);
+  const { rows, error: dataError } = await getDeliveryRowsSafe();
   const kpi = computeKpi(rows, period, rows);
   const daily = computeDaily(rows, period, parsed.gran);
   const exp = computeExpenses(rows, period);
@@ -29,6 +30,7 @@ export default async function ExpensesPage(props: { searchParams: Promise<Record
     <>
       <PageHeader title="Dépenses" subtitle={`Analyse · ${periodToLabel(period, parsed.preset)}`} />
       <div className="mb-6"><PeriodSelector /></div>
+      {dataError ? <DataError message={dataError} /> : null}
 
       <section className="grid grid-cols-2 lg:grid-cols-4 gap-5 mb-5">
         <div className="card p-5">

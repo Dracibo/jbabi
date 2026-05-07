@@ -17,8 +17,30 @@ async function fetchRows(): Promise<DeliveryRow[]> {
   return parseSheetRows(values);
 }
 
-export const getDeliveryRows = cache(
+const getDeliveryRowsCached = cache(
   async () => fetchRows(),
-  ["jbabi-deliveries"],
+  ["jbabi-deliveries-v2"],
   { revalidate: 60, tags: ["deliveries"] },
 );
+
+export type DeliveryRowsResult = {
+  rows: DeliveryRow[];
+  error: string | null;
+};
+
+/**
+ * Always returns a usable result — never throws.
+ * Pages call this and render either data or a "data unavailable" UI.
+ */
+export async function getDeliveryRowsSafe(): Promise<DeliveryRowsResult> {
+  try {
+    const rows = await getDeliveryRowsCached();
+    return { rows, error: null };
+  } catch (err) {
+    const message = err instanceof Error ? err.message : "Erreur inconnue lors du chargement des données.";
+    return { rows: [], error: message };
+  }
+}
+
+/** Direct access for callers that want to handle errors themselves. */
+export const getDeliveryRows = getDeliveryRowsCached;

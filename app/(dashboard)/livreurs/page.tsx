@@ -1,7 +1,8 @@
 import { PageHeader } from "@/components/dashboard/page-header";
 import { PeriodSelector } from "@/components/dashboard/period-selector";
 import { BarChart } from "@/components/charts/bar-chart";
-import { getDeliveryRows } from "@/lib/sheets/fetch";
+import { getDeliveryRowsSafe } from "@/lib/sheets/fetch";
+import { DataError } from "@/components/dashboard/data-error";
 import { computeCouriers } from "@/lib/aggregate";
 import { periodCache, resolvePeriod, periodToLabel } from "@/lib/period-search-params";
 import { formatFcfa, formatNumber, initials } from "@/lib/utils";
@@ -16,7 +17,7 @@ export default async function CouriersPage(props: { searchParams: Promise<Record
   const parsed = periodCache.parse(searchParams);
   const period = resolvePeriod(parsed);
 
-  const rows = await getDeliveryRows().catch(() => []);
+  const { rows, error: dataError } = await getDeliveryRowsSafe();
   const stats = computeCouriers(rows, period);
   const colors = stats.map((_, i) => PALETTE[i % PALETTE.length]);
 
@@ -24,6 +25,7 @@ export default async function CouriersPage(props: { searchParams: Promise<Record
     <>
       <PageHeader title="Livreurs" subtitle={`Performance individuelle · ${periodToLabel(period, parsed.preset)}`} />
       <div className="mb-6"><PeriodSelector /></div>
+      {dataError ? <DataError message={dataError} /> : null}
 
       <section className="card p-6 mb-5">
         <div className="flex items-center justify-between mb-2">

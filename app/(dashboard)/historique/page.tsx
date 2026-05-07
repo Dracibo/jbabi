@@ -1,7 +1,8 @@
 import { PageHeader } from "@/components/dashboard/page-header";
 import { PeriodSelector } from "@/components/dashboard/period-selector";
 import { HistoryTable } from "./history-table";
-import { getDeliveryRows } from "@/lib/sheets/fetch";
+import { getDeliveryRowsSafe } from "@/lib/sheets/fetch";
+import { DataError } from "@/components/dashboard/data-error";
 import { filterByPeriod } from "@/lib/aggregate";
 import { periodCache, resolvePeriod, periodToLabel } from "@/lib/period-search-params";
 
@@ -12,11 +13,11 @@ export default async function HistoryPage(props: { searchParams: Promise<Record<
   const parsed = periodCache.parse(searchParams);
   const period = resolvePeriod(parsed);
 
-  const rows = await getDeliveryRows().catch(() => []);
+  const { rows, error: dataError } = await getDeliveryRowsSafe();
   const filtered = filterByPeriod(rows, period).slice().reverse();
 
   const serialized = filtered.map((r) => ({
-    date: r.date.toISOString(),
+    date: !isNaN(r.date.getTime()) ? r.date.toISOString() : new Date().toISOString(),
     livreur: r.livreur,
     nbLivraisons: r.nbLivraisons,
     montantTotal: r.montantTotal,
@@ -33,6 +34,7 @@ export default async function HistoryPage(props: { searchParams: Promise<Record<
     <>
       <PageHeader title="Historique" subtitle={`${filtered.length} saisies · ${periodToLabel(period, parsed.preset)}`} />
       <div className="mb-6"><PeriodSelector /></div>
+      {dataError ? <DataError message={dataError} /> : null}
       <HistoryTable rows={serialized} />
     </>
   );
