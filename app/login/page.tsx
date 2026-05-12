@@ -23,7 +23,7 @@ export default async function LoginPage() {
           <LoginForm />
         </div>
         <p className="text-center text-xs mt-4" style={{ color: "var(--muted-2)" }}>
-          Réservé au patron · Suivi de l&apos;activité de livraison
+          Suivi de l&apos;activité de livraison
         </p>
       </div>
     </main>
