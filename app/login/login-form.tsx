@@ -12,7 +12,7 @@ export function LoginForm() {
     <form action={formAction} className="mt-6 flex flex-col gap-4">
       <label className="block">
         <span className="text-xs uppercase tracking-wider" style={{ color: "var(--muted)" }}>
-          Email
+          Identifiant
         </span>
         <input
           name="email"
@@ -20,7 +20,7 @@ export function LoginForm() {
           required
           autoComplete="email"
           className="search-bar mt-1.5 px-3.5"
-          placeholder="Utilisateur"
+          placeholder="Identifiant"
         />
       </label>
       <label className="block">
