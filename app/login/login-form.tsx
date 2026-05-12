@@ -20,7 +20,7 @@ export function LoginForm() {
           required
           autoComplete="email"
           className="search-bar mt-1.5 px-3.5"
-          placeholder="patron@jbabi.ci"
+          placeholder="Utilisateur"
         />
       </label>
       <label className="block">
