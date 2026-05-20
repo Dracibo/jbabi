@@ -52,10 +52,12 @@ export function computeKpi(rows: DeliveryRow[], p: Period, all: DeliveryRow[]): 
     arr.reduce((s, r) => s + (typeof r[k] === "number" ? (r[k] as number) : 0), 0);
 
   const livraisons = sum(cur, "nbLivraisons");
-  const recettes = sum(cur, "recetteNette");
+  const chiffreAffaires = sum(cur, "montantTotal");
+  const recetteNette = sum(cur, "recetteNette");
   const depenses = sum(cur, "totalDepenses");
   const livraisonsPrev = sum(prev, "nbLivraisons");
-  const recettesPrev = sum(prev, "recetteNette");
+  const chiffreAffairesPrev = sum(prev, "montantTotal");
+  const recetteNettePrev = sum(prev, "recetteNette");
   const depensesPrev = sum(prev, "totalDepenses");
 
   const coutParLivraison = livraisons > 0 ? depenses / livraisons : 0;
@@ -63,7 +65,8 @@ export function computeKpi(rows: DeliveryRow[], p: Period, all: DeliveryRow[]): 
 
   return {
     livraisons, livraisonsPrev,
-    recettes, recettesPrev,
+    chiffreAffaires, chiffreAffairesPrev,
+    recetteNette, recetteNettePrev,
     depenses, depensesPrev,
     coutParLivraison, coutParLivraisonPrev,
   };

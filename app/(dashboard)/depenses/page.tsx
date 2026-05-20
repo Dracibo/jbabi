@@ -24,7 +24,7 @@ export default async function ExpensesPage(props: { searchParams: Promise<Record
   const pctCarb = exp.total > 0 ? (exp.carburant / exp.total) * 100 : 0;
   const pctRep = exp.total > 0 ? (exp.reparation / exp.total) * 100 : 0;
   const pctAutres = exp.total > 0 ? (exp.autres / exp.total) * 100 : 0;
-  const ratio = kpi.recettes + kpi.depenses > 0 ? (kpi.depenses / (kpi.recettes + kpi.depenses)) * 100 : 0;
+  const ratio = kpi.chiffreAffaires > 0 ? (kpi.depenses / kpi.chiffreAffaires) * 100 : 0;
 
   return (
     <>

@@ -50,8 +50,12 @@ export type DailyPoint = {
 export type Kpi = {
   livraisons: number;
   livraisonsPrev: number;
-  recettes: number;
-  recettesPrev: number;
+  /** Chiffre d'affaires brut (somme de "Montant total livraisons"). */
+  chiffreAffaires: number;
+  chiffreAffairesPrev: number;
+  /** Recette nette (somme de "Recette nette"). */
+  recetteNette: number;
+  recetteNettePrev: number;
   depenses: number;
   depensesPrev: number;
   coutParLivraison: number;

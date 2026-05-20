@@ -42,10 +42,10 @@ export default async function OverviewPage(props: { searchParams: Promise<Record
           icon={<Bike size={20} strokeWidth={1.6} color="#1B4965" />}
         />
         <KpiCard
-          label="Recettes nettes"
-          value={formatFcfa(kpi.recettes).replace(" F", "")}
+          label="Chiffre d'affaires"
+          value={formatFcfa(kpi.chiffreAffaires).replace(" F", "")}
           unit="F"
-          delta={pctChange(kpi.recettes, kpi.recettesPrev)}
+          delta={pctChange(kpi.chiffreAffaires, kpi.chiffreAffairesPrev)}
           highlight
           icon={<Wallet size={20} strokeWidth={1.6} color="#1B4965" />}
         />
