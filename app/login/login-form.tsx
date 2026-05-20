@@ -19,7 +19,7 @@ export function LoginForm() {
           type="email"
           required
           autoComplete="email"
-          className="search-bar mt-1.5 px-3.5"
+          className="search-bar mt-1.5 px-3.5 w-full block"
           placeholder="Identifiant"
         />
       </label>
@@ -32,7 +32,7 @@ export function LoginForm() {
           type="password"
           required
           autoComplete="current-password"
-          className="search-bar mt-1.5 px-3.5"
+          className="search-bar mt-1.5 px-3.5 w-full block"
           placeholder="••••••••"
         />
       </label>
