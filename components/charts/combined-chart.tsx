@@ -27,8 +27,8 @@ export function CombinedChart({ data }: { data: DailyPoint[] }) {
           },
           {
             type: "line" as const,
-            label: "Recettes",
-            data: data.map((d) => d.recettes),
+            label: "Chiffre d'affaires",
+            data: data.map((d) => d.chiffreAffaires),
             borderColor: "#10B981",
             backgroundColor: "rgba(16,185,129,0.08)",
             fill: true,
@@ -66,7 +66,7 @@ export function CombinedChart({ data }: { data: DailyPoint[] }) {
             grid: { color: "#EFEBE1" },
             border: { display: false },
             ticks: { color: "#9AA0AA", callback: (v) => formatFcfa(Number(v)) },
-            title: { display: true, text: "Recettes / Dépenses", color: "#9AA0AA", font: { size: 10 } },
+            title: { display: true, text: "CA / Dépenses", color: "#9AA0AA", font: { size: 10 } },
           },
           y2: {
             position: "right",

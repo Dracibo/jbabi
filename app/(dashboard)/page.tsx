@@ -64,11 +64,11 @@ export default async function OverviewPage(props: { searchParams: Promise<Record
           <div>
             <p className="text-[15px] font-medium" style={{ color: "var(--navy)" }}>Évolution combinée</p>
             <p className="text-xs mt-0.5" style={{ color: "var(--muted)" }}>
-              Recettes, dépenses et livraisons · {periodToLabel(period, parsed.preset)}
+              Chiffre d&apos;affaires, dépenses et livraisons · {periodToLabel(period, parsed.preset)}
             </p>
           </div>
           <div className="flex items-center gap-4 text-xs" style={{ color: "var(--muted)" }}>
-            <span className="flex items-center gap-2"><span className="legend-dot" style={{ background: "#10B981" }} />Recettes</span>
+            <span className="flex items-center gap-2"><span className="legend-dot" style={{ background: "#10B981" }} />Chiffre d&apos;affaires</span>
             <span className="flex items-center gap-2"><span className="legend-dot" style={{ background: "#EF4444" }} />Dépenses</span>
             <span className="flex items-center gap-2"><span className="legend-dot" style={{ background: "#1B4965" }} />Livraisons</span>
           </div>

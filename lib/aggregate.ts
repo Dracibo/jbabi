@@ -110,8 +110,9 @@ export function computeDaily(rows: DeliveryRow[], p: Period, gran: Granularity):
       label: b.label,
       date: b.bucketStart,
       livraisons: 0,
-      recettes: 0,
+      chiffreAffaires: 0,
       depenses: 0,
+      recetteNette: 0,
       carburant: 0,
       reparation: 0,
       autres: 0,
@@ -123,8 +124,9 @@ export function computeDaily(rows: DeliveryRow[], p: Period, gran: Granularity):
     const slot = map.get(key);
     if (!slot) continue;
     slot.livraisons += r.nbLivraisons;
-    slot.recettes += r.recetteNette;
+    slot.chiffreAffaires += r.montantTotal;
     slot.depenses += r.totalDepenses;
+    slot.recetteNette += r.recetteNette;
     slot.carburant += r.carburant;
     slot.reparation += r.reparation;
     slot.autres += r.autresDepenses;

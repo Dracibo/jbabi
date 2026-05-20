@@ -37,8 +37,11 @@ export type DailyPoint = {
   label: string;
   date: Date;
   livraisons: number;
-  recettes: number;
+  /** Chiffre d'affaires brut — somme de la colonne "Montant total livraisons (F)". */
+  chiffreAffaires: number;
   depenses: number;
+  /** Recette nette = chiffre d'affaires − dépenses (somme de la colonne "Recette nette (F)"). */
+  recetteNette: number;
   carburant: number;
   reparation: number;
   autres: number;

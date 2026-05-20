@@ -99,13 +99,13 @@ export default async function ExpensesPage(props: { searchParams: Promise<Record
         </div>
 
         <div className="card p-4 sm:p-6">
-          <p className="text-[15px] font-medium" style={{ color: "var(--navy)" }}>Recettes vs Dépenses</p>
-          <p className="text-xs mt-0.5" style={{ color: "var(--muted)" }}>Marge nette sur la période</p>
+          <p className="text-[15px] font-medium" style={{ color: "var(--navy)" }}>Marge nette</p>
+          <p className="text-xs mt-0.5" style={{ color: "var(--muted)" }}>Chiffre d&apos;affaires − dépenses, sur la période</p>
           <div className="chart-scroll-x mt-4">
             <div className="h-[220px] sm:h-[260px]">
               <AreaChart
                 labels={daily.map((d) => d.label)}
-                values={daily.map((d) => d.recettes - d.depenses)}
+                values={daily.map((d) => d.recetteNette)}
                 color="#10B981"
                 format="fcfa"
               />
